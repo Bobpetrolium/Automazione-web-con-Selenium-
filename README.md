@@ -75,4 +75,4 @@ Le azioni svolte includono:
 
 **Roberto Pedrollo**
 Classe 4GI – Informatica
-Progetto scolastico realizzato con Java + Selenium
+Progetto scolastico realizzato durante l'esperienza PCTO con Java + Selenium
