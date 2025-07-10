@@ -1,49 +1,78 @@
-# 🧪 Selenium User Manager Automation
+# 🧪 Selenium User Manager - Automazione Web in Java
 
-Automazione per la gestione degli utenti (verifica, eliminazione e creazione) tramite **Selenium WebDriver** in Java.  
-Il progetto simula il comportamento di un amministratore che accede a un portale web, naviga nei menu e gestisce gli utenti in modo automatico.
-
----
-
-## 🚀 Cos'è Selenium?
-
-[Selenium](https://www.selenium.dev/) è una suite di strumenti open-source per l'automazione dei browser web.  
-Permette di simulare azioni utente come clic, inserimento di testo, navigazione tra pagine e verifica di elementi.
-
-In questo progetto, Selenium viene usato con **Java** e **ChromeDriver** per:
-
-- Accedere automaticamente al portale utente
-- Verificare la presenza di un utente specifico
-- Eliminarlo se già esistente
-- Creare un nuovo utente con dati predefiniti
+Questo progetto automatizza la gestione degli utenti su un portale web utilizzando **Java** e **Selenium WebDriver**.  
+Il programma effettua l’accesso, verifica se un utente esiste, lo elimina (se presente) e lo ricrea automaticamente compilando tutti i campi necessari.
 
 ---
 
-## 📁 Funzionalità
+## 💡 Come funziona
 
-✅ Login automatico  
-✅ Navigazione tra sezioni (TOOLS > USER MANAGER > Utenti)  
-✅ Ricerca utente per nome e cognome  
-✅ Eliminazione utente se già esistente  
-✅ Creazione nuovo utente con campi compilati  
-✅ Selezione da menu a tendina (gruppo, ruolo, azienda)  
-✅ Gestione di iframe (se presente)
+Il codice avvia un browser Chrome, si collega a una pagina web interna (es. `http://192.168.1.210/#/login`), e simula il comportamento di un amministratore.  
+Le azioni svolte includono:
 
----
-
-## 🧠 Requisiti
-
-- Java 17 o superiore
-- [Selenium Java Bindings](https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java)
-- [ChromeDriver](https://sites.google.com/chromium.org/driver/)
-- IntelliJ IDEA (consigliato)
+- **Login**: selezione dell’utente e inserimento password  
+- **Navigazione**: apertura dei menu `TOOLS > USER MANAGER > Utenti`  
+- **Gestione utenti**:
+  - Cerca un utente specifico (es. "Luca Bello")
+  - Se esiste, lo elimina
+  - In ogni caso, crea un nuovo utente compilando i campi richiesti
 
 ---
 
-## ⚙️ Setup e Avvio
+## 🔍 Dettagli del codice
 
-1. Clona il repository:
+- Viene usata `WebDriverWait` per assicurarsi che ogni elemento sia visibile e cliccabile prima di interagirci.
+- La ricerca dell’utente avviene scorrendo ogni riga della tabella (`div.MuiDataGrid-row`) e confrontando nome e cognome.
+- In caso di match, il programma scrolla la riga in vista e clicca sul bottone con l’icona `DeleteIcon`.
+- Dopo l’eventuale eliminazione, viene aperta la finestra di creazione utente dove:
+  - Vengono inseriti `nome`, `cognome`, `username`, `password`, `email`, `telefono`
+  - Si selezionano `gruppo`, `ruolo` e `azienda` da menu a tendina
+- Il tutto è intervallato da `Thread.sleep()` per gestire i tempi di caricamento (oltre alle attese esplicite).
 
-   ```bash
-   git clone https://github.com/tuo-username/selenium-user-manager.git
-   cd selenium-user-manager
+---
+
+## ⚙️ Requisiti
+
+- ✅ Java 17+
+- ✅ [Selenium WebDriver](https://www.selenium.dev/downloads/)
+- ✅ [ChromeDriver](https://chromedriver.chromium.org/downloads) compatibile con la versione di Chrome
+- ✅ IntelliJ IDEA (o altro IDE Java)
+
+---
+
+## ▶️ Come eseguire
+
+1. Imposta il percorso corretto del ChromeDriver:
+   java
+   System.setProperty("webdriver.chrome.driver", "C:\\selenium\\chromedriver.exe");
+
+
+2. Avvia il file `ProvaSelenium.java` da IntelliJ o da terminale.
+
+---
+
+## File principali
+
+* **ProvaSelenium.java**
+  Contiene tutto il codice necessario per:
+
+  * Login automatico
+  * Navigazione nel sito
+  * Verifica presenza utente
+  * Eliminazione e creazione utente
+
+---
+
+## Note aggiuntive
+
+* Il codice gestisce automaticamente anche la presenza di eventuali iframe.
+* Tutti i passaggi sono accompagnati da `System.out.println()` per mostrare lo stato delle operazioni nella console.
+* In caso di errori o elementi non trovati, il programma mostra messaggi chiari per il debug.
+
+---
+
+## Autore
+
+**Roberto Pedrollo**
+Classe 4GI – Informatica
+Progetto scolastico realizzato con Java + Selenium
